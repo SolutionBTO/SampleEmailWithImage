@@ -38,7 +38,7 @@ public class Principal {
 			  
 			  //put the format to recognize the image,
 			  //the reason for not accepting all image formats
-			  String cid = email.embed(new File("./java.jpg"));
+			  String cid = email.embed(new File("./java_mascote.jpg"));
 			  
 			  //html text
 			  String txtHtml=
