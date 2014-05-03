@@ -1,5 +1,7 @@
 
 import java.io.File;
+
+import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.HtmlEmail;
 
 /**
@@ -13,32 +15,37 @@ public class Principal {
 	
 	public static void main(String[] args) {		
 		try {
+			 //object of attachment
+			 EmailAttachment attachment = new EmailAttachment(); 
+			 //set file local, convert in URL
+			 attachment.setURL(new File("./Commons Email - Examples.pdf").toURI().toURL());
+			 attachment.setDisposition(EmailAttachment.ATTACHMENT); 
+
 			 // Create the email message
 			  HtmlEmail email = new HtmlEmail();
-			  
+			  email.attach(attachment);
 			  //show log
 			  email.setDebug(true);
-			  
 			  //set port
 			  email.setSmtpPort(587);  
 			  //check this rules for security
 			  email.setStartTLSEnabled(true);
 			  //email.setSSLCheckServerIdentity(true);
 			
-			  email.setHostName("smtp.live.com");//server SMTP
+			  email.setHostName("smtp.live.com");//server SMTP for Hotmail, alter other
 			  email.setAuthentication("yourEmail@hotmail.com", "yourPassword");
 			  email.setFrom("yourEmail@hotmail.com", "yourName");
 			  
 			  //destiny's
-			  email.addTo("emailDest1", "NameDest1");
-			  email.addTo("emailDest2", "NameDest2");
-			  email.addTo("emailDest3", "NameDest3");
+			  email.addTo("yourDestinyEmail1", "yourDestinyName1");
+			  email.addTo("yourDestinyEmail2", "yourDestinyName2");
+			  email.addTo("yourDestinyEmail3", "yourDestinyName3");
 			  
-			  email.setSubject("Test Send Email with Image");
+			  email.setSubject("Test email html with image and file attachment");
 			  
 			  //put the format to recognize the image,
 			  //the reason for not accepting all image formats
-			  String cid = email.embed(new File("./java_mascote.jpg"));
+			  String cid = email.embed(new File("./Apache_logo.gif"));
 			  
 			  //html text
 			  String txtHtml=
@@ -50,7 +57,7 @@ public class Principal {
 							  + "<img src=\"cid:"+cid+"\">"
 							  + "</a>"
 							  + "</html>";
-			  	  
+			  
 			  // set the html message
 			  email.setHtmlMsg(txtHtml);
 			  // send the email
